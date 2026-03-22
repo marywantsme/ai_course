@@ -1,14 +1,14 @@
 def save_contacts(contacts):
     with open("contacts.txt", "w") as file:
         for contact in contacts:
-            file.write(contact["name"] + "," + contact["phone"] + "," + contact["age"] + "," + contact["city"] + "," + contact["status"] + "\n")
+            file.write(contact["name"] + "|" + contact["phone"] + "|" + contact["age"] + "|" + contact["city"] + "|" + contact["status"] + "\n")
 
 def load_contacts():
     contacts = []
     try:
         with open("contacts.txt", "r") as file:
             for line in file:
-                name, phone, age, city, status = line.strip().split(",")
+                name, phone, age, city, status = line.strip().split("|")
                 contact = {"name": name, "phone": phone, "age": age, "city": city, "status": status}
                 contacts.append(contact)
     except FileNotFoundError:
@@ -46,8 +46,8 @@ print("Загружено контактов: " + str(len(contacts)))
 loaded_count = len(contacts)
 
 print("Хотите удалить контакт? (да/нет)")
-answer = input().lower()
-if answer == "да":
+answer = input().lower().strip()
+if answer in ("да", "yes", "y", "д"):
     popcontact(contacts)
 
 n = int(input("Сколько новых контактов добавить? "))
